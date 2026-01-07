@@ -1,6 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/features/app/presentation/widgets/swipe_btn.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -17,7 +17,7 @@ class Welcome extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding:EdgeInsets.symmetric(horizontal: 16, vertical: 32),
               child: Row(
                 children: [
                   Column(
@@ -25,6 +25,9 @@ class Welcome extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildTitle(context),
+                      ..._buildSubtitle(context),
+                      SizedBox(height: 30),
+                      SwipeBtn(),
                     ],
                   ),
                 ],
@@ -36,12 +39,15 @@ class Welcome extends StatelessWidget {
     );
   }
 
-  Widget _buildSubTitle(){
-    return SizedBox();
+  List<Widget> _buildSubtitle(BuildContext context){
+    final textTheme = Theme.of(context).textTheme;
+    return [
+      Text("Challenge your mind, Compete in real time", style: textTheme.bodyMedium,),
+      Text("Classic strategy, modern experience", style: textTheme.bodyMedium),
+    ];
   }
 
   RichText _buildTitle(BuildContext context){
-
     final textTheme = Theme.of(context).textTheme;
     return RichText(
         text: TextSpan(
@@ -120,4 +126,5 @@ class Welcome extends StatelessWidget {
       ),
     );
   }
+
 }
