@@ -8,12 +8,13 @@ class SwipeBtn extends StatefulWidget {
 }
 
 class _SwipeBtnState extends State<SwipeBtn> {
-
+  late final ValueNotifier<double> btnPositionNotifier;
   double containerWidth = 0;
 
   @override
   void initState() {
     super.initState();
+    btnPositionNotifier = ValueNotifier<double>(0);
   }
 
   @override
@@ -40,20 +41,34 @@ class _SwipeBtnState extends State<SwipeBtn> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              color: Colors.redAccent,
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 2
-                )
-              ]
+          GestureDetector(
+            onHorizontalDragUpdate: (dragDetail){
+              btnPositionNotifier.value =  (btnPositionNotifier.value+dragDetail.primaryDelta!).clamp(0, 300);
+            },
+            // onHorizontalDragEnd: ,
+            child: ValueListenableBuilder(
+              valueListenable: btnPositionNotifier,
+              builder: (context, position, _) {
+                return Transform.translate(
+                  offset: Offset(position, 0),
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 2
+                        )
+                      ]
+                    ),
+                    child: Icon(Icons.arrow_forward_ios, size: 20,),
+                  ),
+                );
+              }
             ),
-            child: Icon(Icons.arrow_forward_ios, size: 20,),
           ),
           Text("Swipe to get Started"),
           Icon(Icons.arrow_forward_ios)
