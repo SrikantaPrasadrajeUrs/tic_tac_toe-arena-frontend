@@ -7,25 +7,66 @@ class SwipeBtn extends StatefulWidget {
   State<SwipeBtn> createState() => _SwipeBtnState();
 }
 
-class _SwipeBtnState extends State<SwipeBtn> {
+class _SwipeBtnState extends State<SwipeBtn> with TickerProviderStateMixin{
+  // current Pos
   late final ValueNotifier<double> btnPositionNotifier;
   double containerWidth = 0;
+  double padding = 5;
+  double maxDrag = 0;
+  double buttonSize = 50;
+  // parent
+  late final AnimationController controller;
+  // child
+  Animation<double>? slideAnimation;
 
   @override
   void initState() {
     super.initState();
     btnPositionNotifier = ValueNotifier<double>(0);
+    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 1400));
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    containerWidth = MediaQuery.of(context).size.width-32;
+    containerWidth = MediaQuery.of(context).size.width*.9;
+    maxDrag = containerWidth-padding-buttonSize;
   }
 
   @override
   void dispose() {
+    controller.dispose();
+    btnPositionNotifier.dispose();
     super.dispose();
+  }
+
+  void onDrag(DragUpdateDetails dragDetail){
+    btnPositionNotifier.value =  (btnPositionNotifier.value+dragDetail.primaryDelta!)
+        .clamp(0, maxDrag);
+  }
+
+  void onDragEnd(DragEndDetails dragDetails){
+    if(btnPositionNotifier.value>maxDrag*.7){
+      // animateToEnd
+      _animateTo(maxDrag);
+    }else{
+      // animateToInit
+      _animateTo(0);
+    }
+  }
+
+  void updateBtnPosition(){
+    btnPositionNotifier.value = slideAnimation!.value;
+  }
+
+  void _animateTo(double to){
+    slideAnimation = Tween<double>(begin: btnPositionNotifier.value, end: to)
+        .animate(CurvedAnimation(parent: controller, curve: Curves.decelerate));
+    slideAnimation?.addListener(updateBtnPosition);
+    controller.forward().then((_){
+      slideAnimation?.removeListener(updateBtnPosition);
+      controller.reset();
+    });
   }
 
   @override
@@ -33,7 +74,7 @@ class _SwipeBtnState extends State<SwipeBtn> {
     return Container(
       height: 60,
       width: containerWidth,
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: Colors.grey.withValues(alpha: .2),
         borderRadius: BorderRadius.circular(30)
@@ -42,18 +83,16 @@ class _SwipeBtnState extends State<SwipeBtn> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onHorizontalDragUpdate: (dragDetail){
-              btnPositionNotifier.value =  (btnPositionNotifier.value+dragDetail.primaryDelta!).clamp(0, 300);
-            },
-            // onHorizontalDragEnd: ,
+            onHorizontalDragUpdate: onDrag,
+            onHorizontalDragEnd: onDragEnd,
             child: ValueListenableBuilder(
               valueListenable: btnPositionNotifier,
               builder: (context, position, _) {
                 return Transform.translate(
                   offset: Offset(position, 0),
                   child: Container(
-                    height: 50,
-                    width: 50,
+                    height: buttonSize,
+                    width: buttonSize,
                     decoration: BoxDecoration(
                       color: Colors.redAccent,
                       borderRadius: BorderRadius.circular(30),

@@ -18,18 +18,14 @@ class Welcome extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding:EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-              child: Row(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildTitle(context),
-                      ..._buildSubtitle(context),
-                      SizedBox(height: 30),
-                      SwipeBtn(),
-                    ],
-                  ),
+                  _buildTitle(context),
+                  ..._buildSubtitle(context),
+                  SizedBox(height: 30),
+                  SwipeBtn(),
                 ],
               ),
             )
