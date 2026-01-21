@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/features/auth/presentation/pages/register.dart';
 
 class SwipeBtn extends StatefulWidget {
   const SwipeBtn({super.key});
@@ -47,10 +48,8 @@ class _SwipeBtnState extends State<SwipeBtn> with TickerProviderStateMixin{
 
   void onDragEnd(DragEndDetails dragDetails){
     if(btnPositionNotifier.value>maxDrag*.7){
-      // animateToEnd
-      _animateTo(maxDrag);
+      _animateTo(maxDrag, ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Register())));
     }else{
-      // animateToInit
       _animateTo(0);
     }
   }
@@ -59,13 +58,13 @@ class _SwipeBtnState extends State<SwipeBtn> with TickerProviderStateMixin{
     btnPositionNotifier.value = slideAnimation!.value;
   }
 
-  void _animateTo(double to){
-    slideAnimation = Tween<double>(begin: btnPositionNotifier.value, end: to)
-        .animate(CurvedAnimation(parent: controller, curve: Curves.decelerate));
+  void _animateTo(double to, [Function? fn])async{
+    slideAnimation = Tween<double>(begin: btnPositionNotifier.value, end: to).animate(CurvedAnimation(parent: controller, curve: Curves.decelerate));
     slideAnimation?.addListener(updateBtnPosition);
-    controller.forward().then((_){
+    await controller.forward().then((_){
       slideAnimation?.removeListener(updateBtnPosition);
       controller.reset();
+      fn?.call();
     });
   }
 
