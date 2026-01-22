@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tic_tac_toe/core/theme/app_colors.dart';
+import 'package:tic_tac_toe/features/auth/presentation/pages/register.dart';
+import 'package:tic_tac_toe/utils/navigation.dart';
 
 class SwipeBtn extends StatefulWidget {
   const SwipeBtn({super.key});
@@ -9,7 +11,8 @@ class SwipeBtn extends StatefulWidget {
   State<SwipeBtn> createState() => _SwipeBtnState();
 }
 
-class _SwipeBtnState extends State<SwipeBtn> with SingleTickerProviderStateMixin{
+class _SwipeBtnState extends State<SwipeBtn>
+    with SingleTickerProviderStateMixin {
   late final ValueNotifier<double> buttonPosition;
   late final AnimationController controller;
   late Animation<double>? slideBackAnimation;
@@ -22,43 +25,54 @@ class _SwipeBtnState extends State<SwipeBtn> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
     buttonPosition = ValueNotifier<double>(0);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    containerWidth = MediaQuery.of(context).size.width*.9;
-    maxDragArea = containerWidth-btnWidth-(padding*2);
+    containerWidth = MediaQuery.of(context).size.width * .9;
+    maxDragArea = containerWidth - btnWidth - (padding * 2);
   }
 
-  void updateBtnPosition(){
+  void updateBtnPosition() {
     buttonPosition.value = slideBackAnimation!.value;
   }
 
-  void _animateTo(double target){
-    slideBackAnimation = Tween<double>(begin: buttonPosition.value, end: target)
-        .animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
+  void _animateTo(double target, [Function? onAnimationEnd]) {
+    slideBackAnimation = Tween<double>(
+      begin: buttonPosition.value,
+      end: target,
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
     slideBackAnimation!.addListener(updateBtnPosition);
-    controller.forward().then((_){
+    controller.forward().then((_) {
       slideBackAnimation!.removeListener(updateBtnPosition);
       controller.reset();
+      onAnimationEnd?.call();
     });
   }
 
-  void onDragEnd(DragEndDetails _){
-    if(buttonPosition.value>maxDragArea*.7) {
-      _animateTo(maxDragArea);
+  void onDragEnd(DragEndDetails _) {
+    if (buttonPosition.value > maxDragArea * .7) {
+      _animateTo(
+        maxDragArea,
+        () => Navigation.navigateTo(context: context, target: Register()),
+      );
     } else {
       _animateTo(0);
       HapticFeedback.mediumImpact();
-
     }
   }
 
-  void onDragDetail(DragUpdateDetails dragDetail){
-    buttonPosition.value = (buttonPosition.value+dragDetail.delta.dx).clamp(0, maxDragArea);
+  void onDragDetail(DragUpdateDetails dragDetail) {
+    buttonPosition.value = (buttonPosition.value + dragDetail.delta.dx).clamp(
+      0,
+      maxDragArea,
+    );
   }
 
   @override
@@ -69,7 +83,7 @@ class _SwipeBtnState extends State<SwipeBtn> with SingleTickerProviderStateMixin
       height: 60,
       decoration: BoxDecoration(
         color: Colors.grey.withValues(alpha: .3),
-        borderRadius: BorderRadius.circular(30)
+        borderRadius: BorderRadius.circular(30),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,7 +94,7 @@ class _SwipeBtnState extends State<SwipeBtn> with SingleTickerProviderStateMixin
             onHorizontalDragEnd: onDragEnd,
             child: ValueListenableBuilder(
               valueListenable: buttonPosition,
-              builder: (context,position,_) {
+              builder: (context, position, _) {
                 return Transform.translate(
                   offset: Offset(position, 0),
                   child: Container(
@@ -88,26 +102,32 @@ class _SwipeBtnState extends State<SwipeBtn> with SingleTickerProviderStateMixin
                     width: 50,
                     decoration: BoxDecoration(
                       color: AppColors.redGlow,
-                        borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withValues(alpha: .3),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                          )
-                        ]
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withValues(alpha: .3),
+                          spreadRadius: 2,
+                          blurRadius: 2,
+                        ),
+                      ],
                     ),
                     child: Icon(Icons.arrow_forward_ios),
                   ),
                 );
-              }
+              },
             ),
           ),
-          Text("Swipe to Get Started"),
-          Icon(Icons.arrow_forward_ios)
+          ValueListenableBuilder(
+            valueListenable: buttonPosition,
+            builder: (context, value, _) {
+              return Opacity(
+                  opacity: (1-(value/maxDragArea)).clamp(0.0, 1.0),
+                  child: Text("Swipe to Get Started"));
+            }
+          ),
+          Icon(Icons.arrow_forward_ios),
         ],
       ),
     );
   }
-
 }

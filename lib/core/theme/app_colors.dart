@@ -8,4 +8,6 @@ class AppColors {
   static const redGlow = Colors.redAccent;
 
   static const primary = redGlow;
+
+  static final lightGrey = Colors.grey.withValues(alpha: .3);
 }
