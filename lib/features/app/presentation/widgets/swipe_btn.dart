@@ -108,7 +108,14 @@ class _SwipeBtnState extends State<SwipeBtn> with TickerProviderStateMixin{
               }
             ),
           ),
-          Text("Swipe to get Started"),
+          ValueListenableBuilder(
+              valueListenable: btnPositionNotifier,
+            builder: (context, value, _) {
+              return Opacity(
+                  opacity: (1-(value/ maxDrag)).clamp(0, 1.0),
+                  child: Text("Swipe to get Started"));
+            }
+          ),
           Icon(Icons.arrow_forward_ios)
         ],
       ),
