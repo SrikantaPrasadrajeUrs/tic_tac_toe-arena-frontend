@@ -38,10 +38,10 @@ class BuildBtn extends StatelessWidget {
         children: [
           Image.asset(imagePath!, width: 25),
           SizedBox(width: 20),
-          Text(text),
+          Text(text, style: style),
         ],
       );
     }
-    return Text(text);
+    return Text(text, style: style);
   }
 }
