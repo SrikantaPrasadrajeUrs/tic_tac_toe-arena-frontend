@@ -8,6 +8,7 @@ class Register extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FormState;
     final appColors = Theme.of(context).extension<AppColorExtension>()!;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
@@ -61,28 +62,51 @@ class Register extends StatelessWidget {
                 Expanded(child: Divider(indent: 10, thickness: 2)),
               ],
             ),
-            Column(
+            Row(
               spacing: 10,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 BuildBtn(
-                  text: "Sign up with google",
+                  height: 60,
+                  width: 60,
+                  requireCircularRadius: true,
                   imagePath: "assets/images/google.png",
-                  style: textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold, fontSize: 13),
                 ),
                 BuildBtn(
-                  text: "Sign up with google",
-                  imagePath: "assets/images/apple.png",
-                  style: textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold, fontSize: 13),
+                  height: 60,
+                  width: 60,
+                  requireCircularRadius: true,
+                  imagePath: "assets/images/facebook.png",
                 ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(text: "Already have an account?", style: textTheme.bodySmall!.copyWith(color: appColors.neutralGrey, fontWeight: FontWeight.bold, fontSize: 13)),
-                      TextSpan(text: " Sign in", style: textTheme.bodySmall!.copyWith(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 13) ),
-                    ],
-                  ),
+                BuildBtn(
+                  height: 60,
+                  width: 60,
+                  requireCircularRadius: true,
+                  imagePath: "assets/images/apple.png",
                 ),
               ],
+            ),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Already have an account?",
+                    style: textTheme.bodySmall!.copyWith(
+                      color: appColors.neutralGrey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " Sign in",
+                    style: textTheme.bodySmall!.copyWith(
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
