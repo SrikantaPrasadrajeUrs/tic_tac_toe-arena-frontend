@@ -1,15 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/core/theme/app_color_extension.dart';
+import 'package:tic_tac_toe/features/auth/presentation/widgets/footer.dart';
+import 'package:tic_tac_toe/utils/navigation.dart';
 import 'package:tic_tac_toe/widgets/build_btn.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   const Register({super.key});
 
   @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  
+  void navigateToLogin() {
+    Navigation.navigateTo(context: context, target: Placeholder());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    FormState;
-    final appColors = Theme.of(context).extension<AppColorExtension>()!;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(),
@@ -86,27 +95,10 @@ class Register extends StatelessWidget {
                 ),
               ],
             ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Already have an account?",
-                    style: textTheme.bodySmall!.copyWith(
-                      color: appColors.neutralGrey,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                  TextSpan(
-                    text: " Sign in",
-                    style: textTheme.bodySmall!.copyWith(
-                      color: Colors.redAccent,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
+            Footer(
+              onRightTextClick: navigateToLogin,
+              landingTextLeft: "Already have an Account?",
+              landingTextRight: "Login",
             ),
           ],
         ),
