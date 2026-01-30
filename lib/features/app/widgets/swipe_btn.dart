@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tic_tac_toe/core/theme/app_colors.dart';
 import 'package:tic_tac_toe/features/auth/presentation/pages/register.dart';
-import 'package:tic_tac_toe/utils/navigation.dart';
+import 'package:tic_tac_toe/core/utils/app_navigation/navigation.dart';
 
 class SwipeBtn extends StatefulWidget {
   const SwipeBtn({super.key});

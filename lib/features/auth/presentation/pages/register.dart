@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/core/validation/validation.dart';
 import 'package:tic_tac_toe/features/auth/presentation/widgets/footer.dart';
-import 'package:tic_tac_toe/utils/navigation.dart';
-import 'package:tic_tac_toe/widgets/build_btn.dart';
+import '../../../../core/utils/app_navigation/navigation.dart';
+import '../../../../core/widgets/build_btn.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -12,10 +13,37 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  
+  final _formKey = GlobalKey<FormState>();
+
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+
+  bool _obscurePassword = true;
+  bool _rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   void navigateToLogin() {
     Navigation.navigateTo(context: context, target: Placeholder());
   }
+
+  void togglePasswordVisibility() =>
+      setState(() => _obscurePassword = !_obscurePassword);
+
+  void toggleRememberMe(bool? value) =>
+      setState(() => _rememberMe = !_rememberMe);
 
   @override
   Widget build(BuildContext context) {
@@ -28,41 +56,52 @@ class _RegisterState extends State<Register> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Login to Your Account", style: textTheme.headlineMedium),
-                SizedBox(height: 10),
-                Text(
-                  "Access your account to manage settings,",
-                  style: textTheme.bodyMedium,
-                ),
-                Text("explore features", style: textTheme.bodyMedium),
-                SizedBox(height: 30),
-                Text("Email", style: textTheme.labelSmall),
-                TextFormField(),
-                SizedBox(height: 10),
-                Text("Password", style: textTheme.labelSmall),
-                TextFormField(
-                  decoration: InputDecoration(
-                    suffixIcon: Icon(CupertinoIcons.eye_fill),
+            Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Login to Your Account", style: textTheme.headlineMedium),
+                  SizedBox(height: 10),
+                  Text(
+                    "Access your account to manage settings,",
+                    style: textTheme.bodyMedium,
                   ),
-                ),
-                SizedBox(height: 10),
-                BuildBtn(text: "Register", bgColor: Colors.redAccent),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Radio(
-                      value: false,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  Text("explore features", style: textTheme.bodyMedium),
+                  SizedBox(height: 30),
+                  Text("Email", style: textTheme.labelSmall),
+                  TextFormField(controller: _emailController, validator: Validation.email,),
+                  SizedBox(height: 10),
+                  Text("Password", style: textTheme.labelSmall),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: _obscurePassword,
+                    validator: Validation.password,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: togglePasswordVisibility,
+                        icon: _obscurePassword
+                            ? Icon(CupertinoIcons.eye_slash_fill)
+                            : Icon(CupertinoIcons.eye_fill),
+                      ),
                     ),
-                    Text("Remember me"),
-                  ],
-                ),
-              ],
+                  ),
+                  SizedBox(height: 10),
+                  BuildBtn(text: "Register", bgColor: Colors.redAccent),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Checkbox(
+                        value: _rememberMe,
+                        onChanged: toggleRememberMe,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      const Text("Remember me"),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Row(
               children: [

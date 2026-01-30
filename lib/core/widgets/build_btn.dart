@@ -18,7 +18,7 @@ class BuildBtn extends StatelessWidget {
     this.style,
     this.width,
     this.height,
-    this.circularRadius,
+    this.circularRadius = 25,
     this.requireCircularRadius,
   });
 

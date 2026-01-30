@@ -17,6 +17,9 @@ class AppTheme {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
       ),
       textTheme: GoogleFonts.goldmanTextTheme(
         TextTheme(
