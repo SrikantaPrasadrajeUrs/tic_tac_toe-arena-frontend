@@ -15,6 +15,15 @@ class AppTheme{
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        )
       ),
       extensions: [
         AppColorExtension(
