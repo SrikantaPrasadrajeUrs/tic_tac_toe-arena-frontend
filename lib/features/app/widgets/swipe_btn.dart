@@ -22,6 +22,13 @@ class _SwipeBtnState extends State<SwipeBtn>
   double containerWidth = 0;
   final double padding = 5;
 
+  final endReachStartPoint = 0.7;
+
+  bool get hasReachedEnd =>
+      buttonPosition.value >= maxDragArea * endReachStartPoint;
+  
+  double getOpacity(double value) => (1 - (value / maxDragArea)).clamp(0.0, 1.0);
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +37,14 @@ class _SwipeBtnState extends State<SwipeBtn>
       duration: const Duration(milliseconds: 1500),
     );
     buttonPosition = ValueNotifier<double>(0);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    buttonPosition.dispose();
+    buttonPosition.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,14 +72,20 @@ class _SwipeBtnState extends State<SwipeBtn>
   }
 
   void onDragEnd(DragEndDetails _) {
-    if (buttonPosition.value > maxDragArea * .7) {
-      _animateTo(
-        maxDragArea,
-        () => Navigation.navigateTo(context: context, target: Register()),
-      );
+    if (hasReachedEnd) {
+      _animateTo(maxDragArea, () async {
+        final didPop = await Navigation.navigateTo(
+          context: context,
+          target: Register(),
+        );
+        if (didPop == null&&mounted) {
+          _animateTo(0);
+        }
+        HapticFeedback.mediumImpact();
+      });
     } else {
       _animateTo(0);
-      HapticFeedback.mediumImpact();
+      HapticFeedback.lightImpact();
     }
   }
 
@@ -111,7 +132,7 @@ class _SwipeBtnState extends State<SwipeBtn>
                         ),
                       ],
                     ),
-                    child: Icon(Icons.arrow_forward_ios),
+                    child: const Icon(Icons.arrow_forward_ios),
                   ),
                 );
               },
@@ -121,11 +142,12 @@ class _SwipeBtnState extends State<SwipeBtn>
             valueListenable: buttonPosition,
             builder: (context, value, _) {
               return Opacity(
-                  opacity: (1-(value/maxDragArea)).clamp(0.0, 1.0),
-                  child: Text("Swipe to Get Started"));
-            }
+                opacity: getOpacity(value),
+                child: Text("Swipe to Get Started"),
+              );
+            },
           ),
-          Icon(Icons.arrow_forward_ios),
+          const Icon(Icons.arrow_forward_ios),
         ],
       ),
     );

@@ -9,6 +9,7 @@ class BuildBtn extends StatelessWidget {
   final double? width;
   final double? circularRadius;
   final bool? requireCircularRadius;
+  final List<BoxShadow>? shadows;
 
   const BuildBtn({
     super.key,
@@ -20,6 +21,7 @@ class BuildBtn extends StatelessWidget {
     this.height,
     this.circularRadius = 25,
     this.requireCircularRadius,
+    this.shadows,
   });
 
   final double defaultHeight = 60;
@@ -42,6 +44,7 @@ class BuildBtn extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(getRadius()),
         color: fBgColor,
+        boxShadow: shadows
       ),
       child: Center(child: buildCenterWidget()),
     );

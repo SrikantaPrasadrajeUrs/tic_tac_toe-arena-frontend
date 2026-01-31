@@ -9,9 +9,14 @@ class AppColors {
 
   static const primary = redGlow;
 
-  static final lightGrey1 = Colors.grey.withValues(alpha: .1);
-  static final lightGrey2 = Colors.grey.withValues(alpha: .2);
-  static final lightGrey3 = Colors.grey.withValues(alpha: .3);
+  static const lightGrey1 = Color(0xFF1E1E1E); // light grey
+  static const lightGrey2 = Color(0xFF343333); // medium light grey
+  static Color lightGrey3 = Color(0x74272727); // true grey
+
+
+  static const shadowLight = Color(0xFFFAF1F1); // 10%
+  static const shadowMedium = Color(0x26959393); // 15%
+  static const shadowStrong = Color(0x33616060); // 20%
 
   static final nGrey = Colors.grey;
 

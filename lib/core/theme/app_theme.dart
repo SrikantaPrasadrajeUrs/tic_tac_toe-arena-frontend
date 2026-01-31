@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tic_tac_toe/core/theme/app_color_extension.dart';
 import 'package:tic_tac_toe/core/theme/app_colors.dart';
+import 'package:tic_tac_toe/core/theme/app_shadow_extension.dart';
 
 import 'app_text_styles.dart';
 
@@ -31,6 +32,10 @@ class AppTheme {
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(iconColor: WidgetStatePropertyAll(Colors.white)),
       ),
+      appBarTheme: AppBarThemeData(
+        foregroundColor: AppColors.black,
+        backgroundColor: AppColors.black,
+      ),
       extensions: [
         AppColorExtension(
           bgBtnColor: AppColors.lightGrey1,
@@ -39,6 +44,33 @@ class AppTheme {
           greySurfaceHigh: AppColors.lightGrey3,
           neutralGrey: AppColors.nGrey
         ),
+
+        AppShadowExtension(
+          low: [
+            BoxShadow(
+              color: AppColors.shadowLight,
+              blurRadius: 4,
+              spreadRadius: 4,
+              offset: Offset(0, 0),
+            ),
+          ],
+          mid: [
+            BoxShadow(
+              color: AppColors.shadowMedium,
+              blurRadius: 8,
+              spreadRadius: 4,
+              offset: Offset(0, 4),
+            ),
+          ],
+          high: [
+            BoxShadow(
+              color: AppColors.shadowStrong,
+              blurRadius: 12,spreadRadius: 4,
+
+              offset: Offset(0, 6),
+            ),
+          ],
+        )
       ],
     );
   }

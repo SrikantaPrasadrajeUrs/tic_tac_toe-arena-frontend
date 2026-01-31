@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/core/theme/app_shadow_extension.dart';
 import 'package:tic_tac_toe/core/validation/validation.dart';
 import 'package:tic_tac_toe/features/auth/presentation/widgets/footer.dart';
 import '../../../../core/utils/app_navigation/navigation.dart';
@@ -47,9 +48,13 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final shadows = theme.extension<AppShadowExtension>()!;
+    final textTheme = theme.textTheme;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(onPressed: ()=>Navigation.pop(context), icon: Icon(Icons.arrow_back_ios)),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
         child: Column(
@@ -119,18 +124,21 @@ class _RegisterState extends State<Register> {
                   width: 60,
                   requireCircularRadius: true,
                   imagePath: "assets/images/google.png",
+                  shadows: shadows.low,
                 ),
                 BuildBtn(
                   height: 60,
                   width: 60,
                   requireCircularRadius: true,
                   imagePath: "assets/images/facebook.png",
+                  shadows: shadows.low,
                 ),
                 BuildBtn(
                   height: 60,
                   width: 60,
                   requireCircularRadius: true,
                   imagePath: "assets/images/apple.png",
+                  shadows: shadows.low,
                 ),
               ],
             ),
