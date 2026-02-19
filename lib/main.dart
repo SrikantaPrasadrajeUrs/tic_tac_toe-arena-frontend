@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/core/theme/app_theme.dart';
 import 'package:tic_tac_toe/features/app/presentation/welcome.dart';
+import 'package:tic_tac_toe/features/game.dart';
 
 void main(){
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.dark(),
-        home: Welcome()
+        home: Game()
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tic_tac_toe/core/theme/app_colors.dart';
+import 'package:tic_tac_toe/features/auth/presentation/pages/login.dart';
 import 'package:tic_tac_toe/features/auth/presentation/pages/register.dart';
 import 'package:tic_tac_toe/core/utils/app_navigation/navigation.dart';
 
@@ -76,7 +77,7 @@ class _SwipeBtnState extends State<SwipeBtn>
       _animateTo(maxDragArea, () async {
         final didPop = await Navigation.navigateTo(
           context: context,
-          target: Register(),
+          target: Login(),
         );
         if (didPop == null&&mounted) {
           _animateTo(0);
