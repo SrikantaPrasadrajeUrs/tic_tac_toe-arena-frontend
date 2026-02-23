@@ -46,23 +46,52 @@ class AppTheme{
       )
     );
   }
-}
 
-class ColorExtension extends ThemeExtension<ColorExtension>{
+  static ThemeData light() {
+    return ThemeData(
+      scaffoldBackgroundColor: Colors.white,
+      brightness: Brightness.light,
 
-  final Color bgErrorBtnColor;
+      inputDecorationTheme: InputDecorationTheme(
+        fillColor: Colors.grey.withValues(alpha: .08),
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
 
-  const ColorExtension({required this.bgErrorBtnColor});
+      extensions: [
+        AppColorExtension(
+          greySurfaceLow: Colors.grey.shade200,
+          bgBtnRedColor: Colors.redAccent,
+        )
+      ],
 
-  @override
-  ThemeExtension<ColorExtension> copyWith() {
-    // TODO: implement copyWith
-    throw UnimplementedError();
+      textTheme: GoogleFonts.goldmanTextTheme(
+        const TextTheme(
+          titleLarge: TextStyle(color: Colors.black, fontSize: 28),
+          bodyMedium: TextStyle(color: Colors.black87),
+        ),
+      ),
+
+      dividerTheme: DividerThemeData(
+        color: Colors.grey.withValues(alpha: .3),
+      ),
+
+      iconButtonTheme: const IconButtonThemeData(
+        style: ButtonStyle(
+          iconColor: WidgetStatePropertyAll<Color>(Colors.black),
+        ),
+      ),
+    );
   }
-
-  @override
-  ThemeExtension<ColorExtension> lerp(ColorExtension other, double t) {
-    return ColorExtension(bgErrorBtnColor: Color.lerp(bgErrorBtnColor, other.bgErrorBtnColor, t)!);
-  }
-
 }

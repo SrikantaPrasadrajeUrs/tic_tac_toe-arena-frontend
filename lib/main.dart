@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.dark(),
-        home: Game()
+        home: Welcome()
     );
   }
 }

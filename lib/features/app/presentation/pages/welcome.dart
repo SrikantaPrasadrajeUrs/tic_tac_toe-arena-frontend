@@ -13,6 +13,7 @@ class Welcome extends StatelessWidget {
       body: Stack(
         children: [
          _buildImage(imageHeight),
+          _buildThemeButton(),
           _buildOverLay(imageHeight),
           Align(
             alignment: Alignment.bottomCenter,
@@ -31,6 +32,25 @@ class Welcome extends StatelessWidget {
             )
           ),
         ],
+      ),
+    );
+  }
+  
+  Widget _buildThemeButton(){
+    return Align(
+      alignment: Alignment.topRight,
+      child: GestureDetector(
+        onTap: (){
+
+        },
+        child: Container(
+          height: 100,
+          width: 100,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
       ),
     );
   }
