@@ -1,11 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/core/theme/app_theme.dart';
+import 'package:tic_tac_toe/features/app/presentation/bloc/theme/theme_bloc.dart';
 import 'package:tic_tac_toe/features/app/presentation/pages/welcome.dart';
-import 'package:tic_tac_toe/game.dart';
 
-void main(){
-  runApp(const MyApp());
+
+void main() {
+  runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ThemeBloc(),
+        )
+      ],
+      child: const MyApp()
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,10 +21,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.dark(),
-        home: Welcome()
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.light(),
+            darkTheme: AppTheme.dark(),
+            themeMode: state.themeMode,
+            home: Welcome()
+        );
+      },
     );
   }
 }

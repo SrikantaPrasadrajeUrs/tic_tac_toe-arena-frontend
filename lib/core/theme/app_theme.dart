@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tic_tac_toe/core/theme/app_color_extension.dart';
@@ -28,7 +27,9 @@ class AppTheme{
       extensions: [
         AppColorExtension(
             greySurfaceLow: AppColors.greySurveyLow,
-            bgBtnRedColor: AppColors.redAccent
+            bgBtnRedColor: AppColors.redAccent,
+            primary: Colors.black,
+            primaryBg: Colors.grey.withValues(alpha: .2)
         )
       ],
       textTheme: GoogleFonts.goldmanTextTheme(
@@ -73,6 +74,8 @@ class AppTheme{
         AppColorExtension(
           greySurfaceLow: Colors.grey.shade200,
           bgBtnRedColor: Colors.redAccent,
+          primary: Colors.white,
+          primaryBg: Colors.black.withValues(alpha: .2)
         )
       ],
 

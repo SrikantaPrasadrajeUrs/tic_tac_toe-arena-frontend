@@ -1,6 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tic_tac_toe/core/theme/app_color_extension.dart';
 import 'package:tic_tac_toe/features/app/presentation/widgets/swipe_btn.dart';
+
+import '../bloc/theme/theme_bloc.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -13,8 +17,8 @@ class Welcome extends StatelessWidget {
       body: Stack(
         children: [
          _buildImage(imageHeight),
-          _buildThemeButton(),
-          _buildOverLay(imageHeight),
+          _buildThemeButton(context),
+          _buildOverLay(imageHeight, context),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
@@ -36,12 +40,12 @@ class Welcome extends StatelessWidget {
     );
   }
   
-  Widget _buildThemeButton(){
+  Widget _buildThemeButton(BuildContext context){
     return Align(
       alignment: Alignment.topRight,
       child: GestureDetector(
         onTap: (){
-
+          context.read<ThemeBloc>().add(ToggleThemeEvent());
         },
         child: Container(
           height: 100,
@@ -112,7 +116,8 @@ class Welcome extends StatelessWidget {
     );
   }
 
-  Widget _buildOverLay(double imageHeight){
+  Widget _buildOverLay(double imageHeight, BuildContext context){
+    Color? overlayColor = Theme.of(context).extension<AppColorExtension>()?.primary;
     return Positioned(
       left: 0,
       right: 0,
@@ -136,7 +141,7 @@ class Welcome extends StatelessWidget {
           blendMode: BlendMode.dstIn,
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 30, sigmaY: 40),
-            child: Container(color: Colors.black),
+            child: Container(color: overlayColor),
           ),
         ),
       ),

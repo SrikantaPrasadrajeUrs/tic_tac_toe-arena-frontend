@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/core/theme/app_color_extension.dart';
 import 'package:tic_tac_toe/features/auth/presentation/pages/register.dart';
 
 class SwipeBtn extends StatefulWidget {
@@ -70,12 +71,13 @@ class _SwipeBtnState extends State<SwipeBtn> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: 60,
       width: containerWidth,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: Colors.grey.withValues(alpha: .2),
+        color: Theme.of(context).extension<AppColorExtension>()?.primaryBg,
         borderRadius: BorderRadius.circular(30)
       ),
       child: Row(
