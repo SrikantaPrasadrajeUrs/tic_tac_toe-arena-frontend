@@ -42,7 +42,9 @@ class AppTheme {
           greySurfaceLow: AppColors.lightGrey1,
           greySurfaceMid: AppColors.lightGrey2,
           greySurfaceHigh: AppColors.lightGrey3,
-          neutralGrey: AppColors.nGrey
+          neutralGrey: AppColors.nGrey,
+          primary: Colors.black,
+          primaryBg: Colors.grey.withValues(alpha: .2),
         ),
 
         AppShadowExtension(
@@ -65,12 +67,101 @@ class AppTheme {
           high: [
             BoxShadow(
               color: AppColors.shadowStrong,
-              blurRadius: 12,spreadRadius: 4,
-
+              blurRadius: 12,
+              spreadRadius: 4,
               offset: Offset(0, 6),
             ),
           ],
-        )
+        ),
+      ],
+    );
+  }
+  static ThemeData light() {
+    return ThemeData(
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: Colors.white,
+
+      colorScheme: ColorScheme.light(
+        primary: AppColors.primary,
+      ),
+
+      inputDecorationTheme: InputDecorationTheme(
+        fillColor: AppColors.lightGrey1.withValues(alpha: .3),
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+
+      textTheme: GoogleFonts.goldmanTextTheme(
+        TextTheme(
+          titleLarge: AppTextStyles.title.copyWith(color: Colors.black),
+          bodyMedium: AppTextStyles.subtitle.copyWith(color: Colors.black87),
+        ),
+      ),
+
+      dividerTheme: DividerThemeData(
+        color: AppColors.lightGrey2.withValues(alpha: .6),
+      ),
+
+      iconButtonTheme: const IconButtonThemeData(
+        style: ButtonStyle(
+          iconColor: WidgetStatePropertyAll(Colors.black),
+        ),
+      ),
+
+      appBarTheme: const AppBarTheme(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+
+      extensions: [
+        AppColorExtension(
+          bgBtnColor: AppColors.lightGrey1.withValues(alpha: .5),
+          greySurfaceLow: AppColors.lightGrey1,
+          greySurfaceMid: AppColors.lightGrey2,
+          greySurfaceHigh: AppColors.lightGrey3,
+          neutralGrey: AppColors.nGrey,
+          primary: Colors.white,
+          primaryBg: Colors.black.withValues(alpha: .05),
+        ),
+
+        AppShadowExtension(
+          low: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: .05),
+              blurRadius: 4,
+              spreadRadius: 2,
+              offset: const Offset(0, 1),
+            ),
+          ],
+          mid: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: .08),
+              blurRadius: 8,
+              spreadRadius: 2,
+              offset: const Offset(0, 3),
+            ),
+          ],
+          high: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: .12),
+              blurRadius: 12,
+              spreadRadius: 2,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
       ],
     );
   }
