@@ -47,7 +47,6 @@ class _RegisterState extends State<Register> {
     return null;
   }
 
-
   // validate password
 
   // ValueKey, ObjectKey, UniqueKey, GlobalKey
