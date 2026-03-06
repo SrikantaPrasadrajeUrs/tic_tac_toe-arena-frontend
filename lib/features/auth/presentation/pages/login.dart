@@ -55,10 +55,10 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         leading: IconButton(onPressed: ()=>Navigation.pop(context), icon: Icon(Icons.arrow_back_ios)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(16,10,16, MediaQuery.of(context).viewInsets.bottom),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Form(
@@ -95,7 +95,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 10),
                   BuildBtn(text: "Login", bgColor: Colors.redAccent),
                   Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Checkbox(
                         value: _rememberMe,

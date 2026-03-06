@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/core/theme/app_color_extension.dart';
 
 class BuildBtn extends StatelessWidget {
   final Color? bgColor;
@@ -37,7 +38,7 @@ class BuildBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color fBgColor = bgColor ?? Colors.grey.withValues(alpha: .15);
+    final Color fBgColor = bgColor ?? Theme.of(context).extension<AppColorExtension>()!.inversePrimary.withValues(alpha: .15);
     return Container(
       height: height ?? defaultHeight,
       width: width ?? defaultWidth,

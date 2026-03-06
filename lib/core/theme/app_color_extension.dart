@@ -8,6 +8,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
   final Color greySurfaceHigh;
   final Color neutralGrey;
   final Color primary;
+  final Color inversePrimary;
   final Color primaryBg;
 
   const AppColorExtension({
@@ -17,7 +18,8 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     required this.greySurfaceHigh,
     required this.neutralGrey,
     required this.primary,
-    required this.primaryBg
+    required this.inversePrimary,
+    required this.primaryBg,
   });
 
   @override
@@ -28,7 +30,8 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     Color? greySurfaceHigh,
     Color? neutralGrey,
     Color? primary,
-    Color? primaryBg
+    Color? inversePrimary,
+    Color? primaryBg,
   }) {
     return AppColorExtension(
       bgBtnColor: bgBtnColor ?? this.bgBtnColor,
@@ -36,8 +39,9 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
       greySurfaceMid: greySurfaceMid ?? this.greySurfaceMid,
       greySurfaceHigh: greySurfaceHigh ?? this.greySurfaceHigh,
       neutralGrey: neutralGrey ?? this.neutralGrey,
+      primary: primary ?? this.primary,
+      inversePrimary: inversePrimary ?? this.inversePrimary,
       primaryBg: primaryBg ?? this.primaryBg,
-      primary: primary ?? this.primary
     );
   }
 
@@ -55,7 +59,8 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
       greySurfaceHigh: Color.lerp(greySurfaceHigh, other.greySurfaceHigh, t)!,
       neutralGrey: Color.lerp(neutralGrey, other.neutralGrey, t)!,
       primary: Color.lerp(primary, other.primary, t)!,
-      primaryBg: Color.lerp(primaryBg, other.primaryBg, t)!
+      inversePrimary: Color.lerp(inversePrimary, other.inversePrimary, t)!,
+      primaryBg: Color.lerp(primaryBg, other.primaryBg, t)!,
     );
   }
 }

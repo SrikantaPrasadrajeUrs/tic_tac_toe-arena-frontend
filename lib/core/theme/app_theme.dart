@@ -45,6 +45,7 @@ class AppTheme {
           neutralGrey: AppColors.nGrey,
           primary: Colors.black,
           primaryBg: Colors.grey.withValues(alpha: .2),
+          inversePrimary: Colors.white
         ),
 
         AppShadowExtension(
@@ -134,6 +135,7 @@ class AppTheme {
           neutralGrey: AppColors.nGrey,
           primary: Colors.white,
           primaryBg: Colors.black.withValues(alpha: .05),
+          inversePrimary: Colors.black
         ),
 
         AppShadowExtension(

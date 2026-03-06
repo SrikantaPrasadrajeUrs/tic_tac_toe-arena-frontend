@@ -57,97 +57,98 @@ class _RegisterState extends State<Register> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Form(
-              key: _formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Login to Your Account", style: textTheme.headlineMedium),
-                  SizedBox(height: 10),
-                  Text(
-                    "Access your account to manage settings,",
-                    style: textTheme.bodyMedium,
-                  ),
-                  Text("explore features", style: textTheme.bodyMedium),
-                  SizedBox(height: 30),
-                  Text("Email", style: textTheme.labelSmall),
-                  TextFormField(controller: _emailController, validator: Validation.email,),
-                  SizedBox(height: 10),
-                  Text("Password", style: textTheme.labelSmall),
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
-                    validator: Validation.password,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: togglePasswordVisibility,
-                        icon: _obscurePassword
-                            ? Icon(CupertinoIcons.eye_slash_fill)
-                            : Icon(CupertinoIcons.eye_fill),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Form(
+                key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Login to Your Account", style: textTheme.headlineMedium),
+                    SizedBox(height: 10),
+                    Text(
+                      "Access your account to manage settings,",
+                      style: textTheme.bodyMedium,
+                    ),
+                    Text("explore features", style: textTheme.bodyMedium),
+                    SizedBox(height: 30),
+                    Text("Email", style: textTheme.labelSmall),
+                    TextFormField(controller: _emailController, validator: Validation.email,),
+                    SizedBox(height: 10),
+                    Text("Password", style: textTheme.labelSmall),
+                    TextFormField(
+                      controller: _passwordController,
+                      obscureText: _obscurePassword,
+                      validator: Validation.password,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: togglePasswordVisibility,
+                          icon: _obscurePassword
+                              ? Icon(CupertinoIcons.eye_slash_fill)
+                              : Icon(CupertinoIcons.eye_fill),
+                        ),
                       ),
                     ),
+                    SizedBox(height: 10),
+                    BuildBtn(text: "Register", bgColor: Colors.redAccent),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Checkbox(
+                          value: _rememberMe,
+                          onChanged: toggleRememberMe,
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        const Text("Remember me"),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(child: Divider(thickness: 2, endIndent: 10)),
+                  Text("OR"),
+                  Expanded(child: Divider(indent: 10, thickness: 2)),
+                ],
+              ),
+              Row(
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  BuildBtn(
+                    height: 60,
+                    width: 60,
+                    requireCircularRadius: true,
+                    imagePath: "assets/images/google.png",
+                    shadows: shadows.low,
                   ),
-                  SizedBox(height: 10),
-                  BuildBtn(text: "Register", bgColor: Colors.redAccent),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Checkbox(
-                        value: _rememberMe,
-                        onChanged: toggleRememberMe,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      const Text("Remember me"),
-                    ],
+                  BuildBtn(
+                    height: 60,
+                    width: 60,
+                    requireCircularRadius: true,
+                    imagePath: "assets/images/facebook.png",
+                    shadows: shadows.low,
+                  ),
+                  BuildBtn(
+                    height: 60,
+                    width: 60,
+                    requireCircularRadius: true,
+                    imagePath: "assets/images/apple.png",
+                    shadows: shadows.low,
                   ),
                 ],
               ),
-            ),
-            Row(
-              children: [
-                Expanded(child: Divider(thickness: 2, endIndent: 10)),
-                Text("OR"),
-                Expanded(child: Divider(indent: 10, thickness: 2)),
-              ],
-            ),
-            Row(
-              spacing: 10,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                BuildBtn(
-                  height: 60,
-                  width: 60,
-                  requireCircularRadius: true,
-                  imagePath: "assets/images/google.png",
-                  shadows: shadows.low,
-                ),
-                BuildBtn(
-                  height: 60,
-                  width: 60,
-                  requireCircularRadius: true,
-                  imagePath: "assets/images/facebook.png",
-                  shadows: shadows.low,
-                ),
-                BuildBtn(
-                  height: 60,
-                  width: 60,
-                  requireCircularRadius: true,
-                  imagePath: "assets/images/apple.png",
-                  shadows: shadows.low,
-                ),
-              ],
-            ),
-            Footer(
-              onRightTextClick: navigateToLogin,
-              landingTextLeft: "Already have an Account?",
-              landingTextRight: "Login",
-            ),
-          ],
+              Footer(
+                onRightTextClick: navigateToLogin,
+                landingTextLeft: "Already have an Account?",
+                landingTextRight: "Login",
+              ),
+            ],
+          ),
         ),
       ),
     );
