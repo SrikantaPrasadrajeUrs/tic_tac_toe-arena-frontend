@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/core/theme/app_color_extension.dart';
-import 'package:tic_tac_toe/features/app/presentation/widgets/swipe_btn.dart';
+import 'package:tic_tac_toe/features/app/widgets/swipe_btn.dart';
 
 import '../bloc/theme/theme_bloc.dart';
 
@@ -17,7 +17,6 @@ class Welcome extends StatelessWidget {
       body: Stack(
         children: [
          _buildImage(imageHeight),
-          _buildThemeButton(context),
           _buildOverLay(imageHeight, context),
           Align(
             alignment: Alignment.bottomCenter,
@@ -147,5 +146,4 @@ class Welcome extends StatelessWidget {
       ),
     );
   }
-
 }

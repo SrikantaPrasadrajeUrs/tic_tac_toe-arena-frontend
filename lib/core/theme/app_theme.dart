@@ -21,6 +21,12 @@ class AppTheme {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
       ),
       textTheme: GoogleFonts.goldmanTextTheme(
         TextTheme(
@@ -28,7 +34,9 @@ class AppTheme {
           bodyMedium: AppTextStyles.subtitle,
         ),
       ),
-      dividerTheme: DividerThemeData(color: AppColors.lightGrey2),
+      dividerTheme: DividerThemeData(
+        color: AppColors.lightGrey2,
+      ),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(iconColor: WidgetStatePropertyAll(Colors.white)),
       ),
@@ -111,7 +119,7 @@ class AppTheme {
       ),
 
       dividerTheme: DividerThemeData(
-        color: AppColors.lightGrey2.withValues(alpha: .6),
+        color: AppColors.lightGrey2.withValues(alpha: .15),
       ),
 
       iconButtonTheme: const IconButtonThemeData(
@@ -123,7 +131,7 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 0
       ),
 
       extensions: [
