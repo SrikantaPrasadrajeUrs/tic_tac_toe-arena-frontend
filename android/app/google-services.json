@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "876738271742",
+    "project_id": "testapp-4e95c",
+    "storage_bucket": "testapp-4e95c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876738271742:android:e7824ac5b03474404d88af",
+        "android_client_info": {
+          "package_name": "com.example.biometric_demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvsyezKEmZStWM5AXP1pNAHatA85UlWiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876738271742:android:033e4a98d997800d4d88af",
+        "android_client_info": {
+          "package_name": "com.example.demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvsyezKEmZStWM5AXP1pNAHatA85UlWiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876738271742:android:8d2d0045fa7247ee4d88af",
+        "android_client_info": {
+          "package_name": "com.example.flappy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvsyezKEmZStWM5AXP1pNAHatA85UlWiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876738271742:android:9e5a4d189adf404e4d88af",
+        "android_client_info": {
+          "package_name": "com.example.flutter_b3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvsyezKEmZStWM5AXP1pNAHatA85UlWiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876738271742:android:e9af2dd1dfec32804d88af",
+        "android_client_info": {
+          "package_name": "com.tictactoe.tic_tac_toe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvsyezKEmZStWM5AXP1pNAHatA85UlWiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
