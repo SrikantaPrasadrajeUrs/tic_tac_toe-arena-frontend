@@ -11,6 +11,7 @@ class Validation {
     if (value == null || value.isEmpty) {
       return 'Password is required';
     }
+
     if (!value.contains(RegExp(r'[A-Z]'))) {
       return 'Password must contain at least one uppercase letter';
     }

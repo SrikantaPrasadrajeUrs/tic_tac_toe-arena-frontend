@@ -40,7 +40,7 @@ class AppTheme {
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(iconColor: WidgetStatePropertyAll(Colors.white)),
       ),
-      appBarTheme: AppBarThemeData(
+      appBarTheme: AppBarTheme(
         foregroundColor: AppColors.black,
         backgroundColor: AppColors.black,
       ),

@@ -126,8 +126,8 @@ class Welcome extends StatelessWidget {
         child: ShaderMask(
           shaderCallback: (rect) {
             return LinearGradient(
-              begin: AlignmentGeometry.topCenter,
-              end: AlignmentGeometry.bottomCenter,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               stops: [0.0, .35, 0.6, 0.1],
               colors: [
                 Colors.transparent,
