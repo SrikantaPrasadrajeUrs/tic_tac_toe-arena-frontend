@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/core/theme/app_shadow_extension.dart';
 import 'package:tic_tac_toe/core/validation/validation.dart';
+import 'package:tic_tac_toe/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tic_tac_toe/features/auth/presentation/widgets/footer.dart';
 import '../../../../core/utils/app_navigation/navigation.dart';
 import '../../../../core/widgets/build_btn.dart';
@@ -16,31 +18,31 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
 
+  late final TextEditingController _nameController;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
   bool _obscurePassword = true;
-  bool _rememberMe = false;
 
   @override
   void initState() {
     super.initState();
+    _nameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  void navigateToLogin() => Navigation.navigateTo(context: context, target: Placeholder());
+  void navigateToLogin() => Navigation.pop(context);
 
   void togglePasswordVisibility() => setState(() => _obscurePassword = !_obscurePassword);
-
-  void toggleRememberMe(bool? value) => setState(() => _rememberMe = !_rememberMe);
 
   @override
   Widget build(BuildContext context) {
@@ -53,145 +55,158 @@ class _RegisterState extends State<Register> {
       right: false,
       child: Scaffold(
           appBar: AppBar(
-            leading: IconButton(onPressed: ()=>Navigation.pop(context), icon: Icon(Icons.arrow_back_ios)),
+            leading: IconButton(onPressed: () => Navigation.pop(context), icon: const Icon(Icons.arrow_back_ios)),
           ),
-          body: Column(
-            children: [
-              Expanded(
-                flex: 2,
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.fromLTRB(
-                    16,
-                    10,
-                    16,
-                    MediaQuery.of(context).viewInsets.bottom,
-                  ),
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                  child: Form(
-                    key: _formKey,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Login to Your Account",
-                            style: textTheme.headlineMedium),
-
-                        const SizedBox(height: 10),
-
-                        Text(
-                          "Access your account to manage settings,",
-                          style: textTheme.bodyMedium,
-                        ),
-                        Text(
-                          "explore features",
-                          style: textTheme.bodyMedium,
-                        ),
-
-                        const SizedBox(height: 30),
-
-                        Text("Email", style: textTheme.labelSmall),
-                        const SizedBox(height: 3),
-                        TextFormField(
-                          controller: _emailController,
-                          validator: Validation.email,
-                        ),
-
-                        const SizedBox(height: 10),
-
-                        Text("Password", style: textTheme.labelSmall),
-                        const SizedBox(height: 3),
-                        TextFormField(
-                          controller: _passwordController,
-                          obscureText: _obscurePassword,
-                          validator: Validation.password,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: togglePasswordVisibility,
-                              icon: _obscurePassword
-                                  ? const Icon(CupertinoIcons.eye_slash_fill)
-                                  : const Icon(CupertinoIcons.eye_fill),
+          body: BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is AuthFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+              }
+              if (state is AuthSuccess) {
+                // Navigate to Home or Game screen
+              }
+            },
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.fromLTRB(
+                      16,
+                      10,
+                      16,
+                      MediaQuery.of(context).viewInsets.bottom,
+                    ),
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    child: Form(
+                      key: _formKey,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Create Your Account", style: textTheme.headlineMedium),
+                          const SizedBox(height: 10),
+                          Text(
+                            "Join us to start playing and tracking",
+                            style: textTheme.bodyMedium,
+                          ),
+                          Text(
+                            "your scores with friends!",
+                            style: textTheme.bodyMedium,
+                          ),
+                          const SizedBox(height: 30),
+                          Text("Full Name", style: textTheme.labelSmall),
+                          const SizedBox(height: 3),
+                          TextFormField(
+                            controller: _nameController,
+                            validator: (val) => val == null || val.isEmpty ? 'Name is required' : null,
+                          ),
+                          const SizedBox(height: 10),
+                          Text("Email", style: textTheme.labelSmall),
+                          const SizedBox(height: 3),
+                          TextFormField(
+                            controller: _emailController,
+                            validator: Validation.email,
+                          ),
+                          const SizedBox(height: 10),
+                          Text("Password", style: textTheme.labelSmall),
+                          const SizedBox(height: 3),
+                          TextFormField(
+                            controller: _passwordController,
+                            obscureText: _obscurePassword,
+                            validator: Validation.password,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                onPressed: togglePasswordVisibility,
+                                icon: _obscurePassword
+                                    ? const Icon(CupertinoIcons.eye_slash_fill)
+                                    : const Icon(CupertinoIcons.eye_fill),
+                              ),
                             ),
                           ),
-                        ),
+                          const SizedBox(height: 30),
+                          BlocBuilder<AuthBloc, AuthState>(
+                            builder: (context, state) {
+                              if (state is AuthLoading) {
+                                return const Center(child: CircularProgressIndicator());
+                              }
+                              return BuildBtn(
+                                text: "Register",
+                                bgColor: Colors.redAccent,
+                                callback: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    context.read<AuthBloc>().add(
+                                          EmailPasswordRegisterEvent(
+                                            name: _nameController.text,
+                                            email: _emailController.text,
+                                            password: _passwordController.text,
+                                          ),
+                                        );
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
 
-                        const SizedBox(height: 30),
-
-                        BuildBtn(text: "Login", bgColor: Colors.redAccent),
-
-                        Row(
+                /// Bottom Section
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+                    child: Column(
+                      children: [
+                        const Row(
                           children: [
-                            Checkbox(
-                              value: _rememberMe,
-                              onChanged: toggleRememberMe,
-                              materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            const Text("Remember me"),
+                            Expanded(child: Divider(thickness: 2, endIndent: 10)),
+                            Text("OR"),
+                            Expanded(child: Divider(indent: 10, thickness: 2)),
                           ],
+                        ),
+                        const SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            BuildBtn(
+                              height: 60,
+                              width: 60,
+                              requireCircularRadius: true,
+                              imagePath: "assets/images/google.png",
+                              shadows: shadows.low,
+                            ),
+                            BuildBtn(
+                              height: 60,
+                              width: 60,
+                              requireCircularRadius: true,
+                              imagePath: "assets/images/facebook.png",
+                              shadows: shadows.low,
+                            ),
+                            BuildBtn(
+                              height: 60,
+                              width: 60,
+                              requireCircularRadius: true,
+                              imagePath: "assets/images/apple.png",
+                              shadows: shadows.low,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+                        const Spacer(),
+                        Footer(
+                          onRightTextClick: navigateToLogin,
+                          landingTextLeft: "Already have an Account?",
+                          landingTextRight: "Login",
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-
-              /// Bottom Section
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(child: Divider(thickness: 2, endIndent: 10)),
-                          const Text("OR"),
-                          Expanded(child: Divider(indent: 10, thickness: 2)),
-                        ],
-                      ),
-
-                      const SizedBox(height: 15),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          BuildBtn(
-                            height: 60,
-                            width: 60,
-                            requireCircularRadius: true,
-                            imagePath: "assets/images/google.png",
-                            shadows: shadows.low,
-                          ),
-                          BuildBtn(
-                            height: 60,
-                            width: 60,
-                            requireCircularRadius: true,
-                            imagePath: "assets/images/facebook.png",
-                            shadows: shadows.low,
-                          ),
-                          BuildBtn(
-                            height: 60,
-                            width: 60,
-                            requireCircularRadius: true,
-                            imagePath: "assets/images/apple.png",
-                            shadows: shadows.low,
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 15),
-                      Spacer(),
-                      Footer(
-                        onRightTextClick: navigateToLogin,
-                        landingTextLeft: "Don't have an Account?",
-                        landingTextRight: "Register",
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          )
-      ),
+              ],
+            ),
+          )),
     );
   }
 }

@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/core/theme/app_colors.dart';
+import 'package:tic_tac_toe/features/auth/data/datasources/auth_remote_ds.dart';
+import 'package:tic_tac_toe/features/auth/data/repository/auth_repository_impl.dart';
+import 'package:tic_tac_toe/features/auth/domain/repositoories/auth_repository.dart';
+import 'package:tic_tac_toe/features/auth/domain/usecases/login_email_password.dart';
+import 'package:tic_tac_toe/features/auth/domain/usecases/register_email_password.dart';
+import 'package:tic_tac_toe/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tic_tac_toe/features/auth/presentation/pages/login.dart';
 import 'package:tic_tac_toe/features/auth/presentation/pages/register.dart';
 import 'package:tic_tac_toe/core/utils/app_navigation/navigation.dart';
@@ -27,8 +34,9 @@ class _SwipeBtnState extends State<SwipeBtn>
 
   bool get hasReachedEnd =>
       buttonPosition.value >= maxDragArea * endReachStartPoint;
-  
-  double getOpacity(double value) => (1 - (value / maxDragArea)).clamp(0.0, 1.0);
+
+  double getOpacity(double value) =>
+      (1 - (value / maxDragArea)).clamp(0.0, 1.0);
 
   @override
   void initState() {
@@ -72,14 +80,29 @@ class _SwipeBtnState extends State<SwipeBtn>
     });
   }
 
+  Future<bool?> navigateToLogin()async{
+    final dataSource = AuthRemoteDs();
+    final AuthRepository repository = AuthRepositoryImpl(dataSource);
+    final loginEmailPassword = LoginEmailPassword(repository);
+    final registerEmailPassword = RegisterEmailPassword(repository);
+
+    return await Navigation.navigateTo(
+      context: context,
+      target: BlocProvider(
+        create: (context) => AuthBloc(
+          loginEmailPassword: loginEmailPassword,
+          registerEmailPassword: registerEmailPassword,
+        ),
+        child: Login(),
+      ),
+    );
+  }
+
   void onDragEnd(DragEndDetails _) {
     if (hasReachedEnd) {
       _animateTo(maxDragArea, () async {
-        final didPop = await Navigation.navigateTo(
-          context: context,
-          target: Login(),
-        );
-        if (didPop == null&&mounted) {
+        final didPop = await navigateToLogin();
+        if (didPop == null && mounted) {
           _animateTo(0);
         }
         HapticFeedback.mediumImpact();

@@ -23,3 +23,12 @@ final class AuthFailure extends AuthState{
   @override
   List<Object> get props => [message];
 }
+
+final class AuthLoading extends AuthState{
+
+}
+
+final class AuthSuccess extends AuthState{
+  final UserEntity user;
+  const AuthSuccess(this.user);
+}

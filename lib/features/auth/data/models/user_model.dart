@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tic_tac_toe/core/exceptions/login_exception.dart';
 import '../../domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
@@ -14,6 +16,25 @@ class UserModel extends UserEntity {
       name: json['name'] ?? '',
       email: json['email'] ?? '',
       profilePicture: json['profilePicture'],
+    );
+  }
+
+  factory UserModel.fromFirebase(User? user) {
+    if (user == null) throw LoginException("No user data found!");
+    return UserModel(
+      id: user.uid,
+      name: user.displayName ?? '',
+      email: user.email ?? '',
+      profilePicture: user.photoURL,
+    );
+  }
+
+  UserEntity toEntity() {
+    return UserEntity(
+      id: id,
+      name: name,
+      email: email,
+      profilePicture: profilePicture,
     );
   }
 

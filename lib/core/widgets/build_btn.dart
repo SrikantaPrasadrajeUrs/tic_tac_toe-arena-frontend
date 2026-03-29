@@ -3,6 +3,7 @@ import 'package:tic_tac_toe/core/theme/app_color_extension.dart';
 
 class BuildBtn extends StatelessWidget {
   final Color? bgColor;
+  final VoidCallback? callback;
   final String? text;
   final TextStyle? style;
   final String? imagePath;
@@ -23,6 +24,7 @@ class BuildBtn extends StatelessWidget {
     this.circularRadius = 25,
     this.requireCircularRadius,
     this.shadows,
+    this.callback
   });
 
   final double defaultHeight = 60;
@@ -39,15 +41,18 @@ class BuildBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color fBgColor = bgColor ?? Theme.of(context).extension<AppColorExtension>()!.inversePrimary.withValues(alpha: .15);
-    return Container(
-      height: height ?? defaultHeight,
-      width: width ?? defaultWidth,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(getRadius()),
-        color: fBgColor,
-        boxShadow: shadows
+    return GestureDetector(
+      onTap: callback,
+      child: Container(
+        height: height ?? defaultHeight,
+        width: width ?? defaultWidth,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(getRadius()),
+          color: fBgColor,
+          boxShadow: shadows
+        ),
+        child: Center(child: buildCenterWidget()),
       ),
-      child: Center(child: buildCenterWidget()),
     );
   }
 
