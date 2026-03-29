@@ -178,60 +178,53 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-
-              /// Bottom Section
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
-                  child: Column(
-                    children: [
-                      const Row(
-                        children: [
-                          Expanded(child: Divider(thickness: 2, endIndent: 10)),
-                          Text("OR"),
-                          Expanded(child: Divider(indent: 10, thickness: 2)),
-                        ],
-                      ),
-                      const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          BuildBtn(
-                            height: 60,
-                            width: 60,
-                            requireCircularRadius: true,
-                            imagePath: "assets/images/google.png",
-                            shadows: shadows.low,
-                          ),
-                          BuildBtn(
-                            height: 60,
-                            width: 60,
-                            requireCircularRadius: true,
-                            imagePath: "assets/images/facebook.png",
-                            shadows: shadows.low,
-                          ),
-                          BuildBtn(
-                            height: 60,
-                            width: 60,
-                            requireCircularRadius: true,
-                            imagePath: "assets/images/apple.png",
-                            shadows: shadows.low,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 15),
-                      const Spacer(),
-                      Footer(
-                        onRightTextClick: navigateToRegister,
-                        landingTextLeft: "Don't have an Account?",
-                        landingTextRight: "Register",
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
+        ),
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Row(
+              children: [
+                Expanded(child: Divider(thickness: 2, endIndent: 10)),
+                Text("OR"),
+                Expanded(child: Divider(indent: 10, thickness: 2)),
+              ],
+            ),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                BuildBtn(
+                  height: 60,
+                  width: 60,
+                  requireCircularRadius: true,
+                  imagePath: "assets/images/google.png",
+                  shadows: shadows.low,
+                ),
+                BuildBtn(
+                  height: 60,
+                  width: 60,
+                  requireCircularRadius: true,
+                  imagePath: "assets/images/facebook.png",
+                  shadows: shadows.low,
+                ),
+                BuildBtn(
+                  height: 60,
+                  width: 60,
+                  requireCircularRadius: true,
+                  imagePath: "assets/images/apple.png",
+                  shadows: shadows.low,
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+            Footer(
+              onRightTextClick: navigateToRegister,
+              landingTextLeft: "Don't have an Account?",
+              landingTextRight: "Register",
+            ),
+          ],
         ),
       ),
     );
